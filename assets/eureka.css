@@ -1,0 +1,43 @@
+.eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(3), .eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(4), .eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(5), .eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(9) {
+  display: none;
+}
+.eureka-loaded .card {
+  border: 1px solid #ddd;
+}
+.eureka-loaded .card .info:first-child, .eureka-loaded .card .info .pull-right .item:first-child {
+  display: none;
+}
+.eureka-loaded .details .caption {
+  display: none;
+}
+.eureka-loaded .details .attribute-pairs li:nth-child(3) {
+  display: none;
+}
+.eureka-loaded .details .attribute-pairs .full-line:nth-child(2), .eureka-loaded .details .attribute-pairs .full-line:nth-child(3) {
+  display: none;
+}
+.eureka-loaded .drawer .feature .details {
+  border: 0;
+}
+.eureka-loaded .parking-lot-board, .eureka-loaded .parking-lot-scroller {
+  background-image: none;
+}
+.eureka-loaded .project-board-container .project-board-scroller,
+.eureka-loaded .project-board-container .parking-lot-scroller {
+  float: left;
+}
+.eureka-loaded .parking-lot-handle {
+  display: none;
+}
+.eureka-loaded .parking-lot-scroller {
+  border: 0;
+  position: relative;
+  top: auto;
+  right: auto;
+  box-shadow: none;
+}
+.eureka-loaded .parking-lot-board {
+  width: 100%;
+  height: auto;
+  padding-top: 15px;
+}

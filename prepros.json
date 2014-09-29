@@ -1,0 +1,139 @@
+{
+  "id": "b0fd3f83",
+  "cfgVersion": 1,
+  "name": "Eureka",
+  "files": {
+    "f7645fff": {
+      "id": "f7645fff",
+      "pid": "b0fd3f83",
+      "name": "eureka.js",
+      "input": "eureka.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "26d63c91": {
+      "id": "26d63c91",
+      "pid": "b0fd3f83",
+      "name": "eureka.scss",
+      "input": "eureka.scss",
+      "customOutput": false,
+      "type": "Scss",
+      "config": {
+        "autoCompile": true,
+        "lineNumbers": false,
+        "unixNewlines": false,
+        "sourcemaps": false,
+        "debug": false,
+        "compass": false,
+        "fullCompass": false,
+        "outputStyle": "expanded",
+        "autoprefixer": false
+      }
+    },
+    "9f122d40": {
+      "id": "9f122d40",
+      "pid": "b0fd3f83",
+      "name": "eureka.coffee",
+      "input": "eureka.coffee",
+      "customOutput": false,
+      "type": "Coffee",
+      "config": {
+        "autoCompile": true,
+        "bare": false,
+        "uglify": false,
+        "mangle": true,
+        "iced": false,
+        "sourcemaps": false
+      }
+    },
+    "e17d38e3": {
+      "id": "e17d38e3",
+      "pid": "b0fd3f83",
+      "name": "eureka.js",
+      "input": "assets/eureka.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "2e8f9ea2": {
+      "id": "2e8f9ea2",
+      "pid": "b0fd3f83",
+      "name": "readme.md",
+      "input": "readme.md",
+      "customOutput": false,
+      "type": "Md",
+      "config": {
+        "autoCompile": false,
+        "sanitize": false,
+        "gfm": true
+      }
+    }
+  },
+  "imports": {},
+  "images": {
+    "e796c869": {
+      "id": "e796c869",
+      "pid": "b0fd3f83",
+      "path": "icon.png",
+      "size": 1553,
+      "name": "icon.png",
+      "type": "Png",
+      "initialSize": 1553,
+      "status": "NOT_OPTIMIZED"
+    },
+    "54206e19": {
+      "id": "54206e19",
+      "pid": "b0fd3f83",
+      "path": "icon_off.png",
+      "size": 5871,
+      "name": "icon_off.png",
+      "type": "Png",
+      "initialSize": 5871,
+      "status": "NOT_OPTIMIZED"
+    }
+  },
+  "config": {
+    "watch": true,
+    "liveRefresh": true,
+    "liveRefreshDelay": 0,
+    "filterPatterns": "",
+    "useCustomServer": false,
+    "customServerUrl": "",
+    "cssPath": "assets/",
+    "jsPath": "assets/",
+    "htmlPath": "html/",
+    "minJsPath": "min/",
+    "htmlExtension": ".html",
+    "cssPathType": "RELATIVE_FILEDIR",
+    "htmlPathType": "REPLACE_TYPE",
+    "jsPathType": "RELATIVE_FILEDIR",
+    "minJsPathType": "RELATIVE_FILEDIR",
+    "htmlTypes": "jade, haml, slim, markdown, md",
+    "cssTypes": "less, sass, stylus, scss, styl",
+    "jsTypes": "coffee, coffeescript, coffeescripts, ls, livescript, livescripts",
+    "cssPreprocessorPath": "",
+    "htmlPreprocessorPath": "",
+    "jsPreprocessorPath": "",
+    "minJsPreprocessorPath": "",
+    "autoprefixerBrowsers": "",
+    "ftpHost": "",
+    "ftpPort": "21",
+    "ftpRemotePath": "",
+    "ftpIgnorePreprocessorFiles": true,
+    "ftpType": "FTP",
+    "ftpExcludePatterns": "",
+    "ftpPassword": "",
+    "ftpUsername": ""
+  }
+}

@@ -1,0 +1,82 @@
+// Only apply styles if eureka is loaded.
+.eureka-loaded {
+
+
+/////// TOP NAV ///////
+
+// Hide things we don't care for
+.top_nav .nav:not(.right-nav) li {
+  &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(9) {
+    display: none;
+  }
+}
+
+
+//////// CARDS ////////
+
+.card {
+  .info {
+    &:first-child, .pull-right .item:first-child {
+      display: none;
+    }
+  }
+  border: 1px solid #ddd;
+}
+
+
+.details {
+  .caption {
+    display: none;
+  }
+  .attribute-pairs {
+    li:nth-child(3) {
+      display: none;
+    }
+    .full-line {
+      &:nth-child(2), &:nth-child(3) {
+        display: none;
+      }
+    }
+  }
+}
+
+
+.drawer .feature .details {
+  border: 0;
+}
+
+.parking-lot-board, .parking-lot-scroller {
+  background-image: none;
+}
+
+/// FEATURES BOARD ///
+
+.project-board-container {
+  .project-board-scroller,
+  .parking-lot-scroller {
+    float: left;
+    //width: 100% !important;
+  }
+}
+
+.parking-lot-handle {
+  display: none;
+}
+
+.parking-lot-scroller {
+  border: 0;
+  position: relative;
+  top: auto;
+  right: auto;
+  box-shadow: none;
+}
+
+.parking-lot-board {
+  width: 100%;
+  height: auto;
+  padding-top: 15px;
+}
+
+
+// End .eureka_loaded
+}
