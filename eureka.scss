@@ -103,6 +103,7 @@ $ahaNavLinkHover: #69BCFF;
 .project-board-container {
   .project-board-scroller,
   .parking-lot-scroller {
+    position: relative;
     float: left;
   }
 }
@@ -113,7 +114,6 @@ $ahaNavLinkHover: #69BCFF;
 
 .parking-lot-scroller {
   border: 0;
-  position: relative;
   top: auto;
   right: auto;
   box-shadow: none;
