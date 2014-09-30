@@ -2,12 +2,55 @@
 .eureka-loaded {
 
 
+////// VARIABLES //////
+
+$ahaText: #474747;
+$ahaNavBorder: #D5D5D5;
+$ahaNavLinkHover: #69BCFF;
+
+
 /////// TOP NAV ///////
 
-// Hide things we don't care for
-.top_nav .nav:not(.right-nav) li {
-  &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(9) {
+.trial-header,
+#nav-notebooks,
+#nav-product,
+#nav-strategy,
+#nav-roadmap .subnav {
+  display: none;
+}
+#nav-more-items {
+  .nav-items {
     display: none;
+    position: absolute;
+    z-index: 10000;
+    background: #FFF;
+    border: 1px solid $ahaNavBorder;
+  }
+
+  .primary a,
+  .secondary a {
+    display: block;
+    min-width: 120px;
+    padding: 8px;
+    line-height: 15px;
+    color: $ahaText;
+    &:hover {
+      text-decoration: none;
+      color: #FFF;
+      background: $ahaNavLinkHover;
+    }
+  }
+  .primary {
+    font-weight: bold;
+  }
+  .secondary {
+    font-weight: normal;
+  }
+
+  &.expanded {
+    .nav-items {
+      display: block;
+    }
   }
 }
 

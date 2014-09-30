@@ -1,5 +1,39 @@
-.eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(3), .eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(4), .eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(5), .eureka-loaded .top_nav .nav:not(.right-nav) li:nth-child(9) {
+.eureka-loaded .trial-header,
+.eureka-loaded #nav-notebooks,
+.eureka-loaded #nav-product,
+.eureka-loaded #nav-strategy,
+.eureka-loaded #nav-roadmap .subnav {
   display: none;
+}
+.eureka-loaded #nav-more-items .nav-items {
+  display: none;
+  position: absolute;
+  z-index: 10000;
+  background: #FFF;
+  border: 1px solid #d5d5d5;
+}
+.eureka-loaded #nav-more-items .primary a,
+.eureka-loaded #nav-more-items .secondary a {
+  display: block;
+  min-width: 120px;
+  padding: 8px;
+  line-height: 15px;
+  color: #474747;
+}
+.eureka-loaded #nav-more-items .primary a:hover,
+.eureka-loaded #nav-more-items .secondary a:hover {
+  text-decoration: none;
+  color: #FFF;
+  background: #69bcff;
+}
+.eureka-loaded #nav-more-items .primary {
+  font-weight: bold;
+}
+.eureka-loaded #nav-more-items .secondary {
+  font-weight: normal;
+}
+.eureka-loaded #nav-more-items.expanded .nav-items {
+  display: block;
 }
 .eureka-loaded .card {
   border: 1px solid #ddd;
