@@ -3,20 +3,6 @@
   "cfgVersion": 1,
   "name": "Eureka",
   "files": {
-    "f7645fff": {
-      "id": "f7645fff",
-      "pid": "b0fd3f83",
-      "name": "eureka.js",
-      "input": "eureka.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": false,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
     "26d63c91": {
       "id": "26d63c91",
       "pid": "b0fd3f83",
@@ -82,20 +68,20 @@
   },
   "imports": {},
   "images": {
-    "e796c869": {
-      "id": "e796c869",
+    "5b237f5f": {
+      "id": "5b237f5f",
       "pid": "b0fd3f83",
-      "path": "icon.png",
+      "path": "assets/icon.png",
       "size": 1553,
       "name": "icon.png",
       "type": "Png",
       "initialSize": 1553,
       "status": "NOT_OPTIMIZED"
     },
-    "54206e19": {
-      "id": "54206e19",
+    "33fd9a47": {
+      "id": "33fd9a47",
       "pid": "b0fd3f83",
-      "path": "icon_off.png",
+      "path": "assets/icon_off.png",
       "size": 5871,
       "name": "icon_off.png",
       "type": "Png",

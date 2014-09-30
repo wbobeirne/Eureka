@@ -41,6 +41,13 @@
 .eureka-loaded .card .info:first-child, .eureka-loaded .card .info .pull-right .item:first-child {
   display: none;
 }
+.eureka-loaded .project-board-container .release .card:hover {
+  box-shadow: none;
+  border: 1px solid #0073CF !important;
+}
+.eureka-loaded .details {
+  border: 0;
+}
 .eureka-loaded .details .caption {
   display: none;
 }
@@ -50,14 +57,9 @@
 .eureka-loaded .details .attribute-pairs .full-line:nth-child(2), .eureka-loaded .details .attribute-pairs .full-line:nth-child(3) {
   display: none;
 }
-.eureka-loaded .drawer .feature .details {
-  border: 0;
-}
-.eureka-loaded .parking-lot-board, .eureka-loaded .parking-lot-scroller {
-  background-image: none;
-}
 .eureka-loaded .project-board-container .project-board-scroller,
 .eureka-loaded .project-board-container .parking-lot-scroller {
+  position: relative;
   float: left;
 }
 .eureka-loaded .parking-lot-handle {
@@ -65,7 +67,6 @@
 }
 .eureka-loaded .parking-lot-scroller {
   border: 0;
-  position: relative;
   top: auto;
   right: auto;
   box-shadow: none;
@@ -74,4 +75,38 @@
   width: 100%;
   height: auto;
   padding-top: 15px;
+}
+.eureka-loaded .parking-lot-board, .eureka-loaded .parking-lot-scroller {
+  background-image: none;
+}
+.eureka-loaded .release-feature-list {
+  min-height: 0px !important;
+}
+.eureka-loaded .project-board {
+  width: 100% !important;
+  height: auto !important;
+  padding-top: 15px;
+}
+.eureka-loaded .project-board-scroller, .eureka-loaded .parking-lot-scroller {
+  float: left !important;
+  width: 100% !important;
+  height: auto !important;
+}
+.eureka-loaded .parking-lot-handle {
+  display: none;
+}
+.eureka-loaded .parking-lot-scroller {
+  border: 0;
+  position: relative;
+  top: auto !important;
+  right: auto !important;
+  box-shadow: none;
+}
+.eureka-loaded .parking-lot-board {
+  width: 100% !important;
+  height: auto  !important;
+  padding-top: 15px;
+}
+.eureka-loaded .project-board-container {
+  background-color: #eee;
 }

@@ -59,22 +59,36 @@ $ahaNavLinkHover: #69BCFF;
 
 .card {
   .info {
+    // hide ref-ids, dates, and aha score
     &:first-child, .pull-right .item:first-child {
       display: none;
     }
   }
+  
   border: 1px solid #ddd;
 }
 
+// card hover
+.project-board-container .release .card:hover {
+    box-shadow: none;
+    border: 1px solid #0073CF !important;
+}
 
 .details {
+  border: 0;
+  
+  // remove ref-id
   .caption {
     display: none;
   }
+  
+  // goals and initiatives are for disruptive innovators bringing game-changing technology to the table.
+  // and no more aha! score.
   .attribute-pairs {
     li:nth-child(3) {
       display: none;
     }
+    
     .full-line {
       &:nth-child(2), &:nth-child(3) {
         display: none;
@@ -84,21 +98,13 @@ $ahaNavLinkHover: #69BCFF;
 }
 
 
-.drawer .feature .details {
-  border: 0;
-}
-
-.parking-lot-board, .parking-lot-scroller {
-  background-image: none;
-}
-
 /// FEATURES BOARD ///
 
 .project-board-container {
   .project-board-scroller,
   .parking-lot-scroller {
+    position: relative;
     float: left;
-    //width: 100% !important;
   }
 }
 
@@ -108,7 +114,6 @@ $ahaNavLinkHover: #69BCFF;
 
 .parking-lot-scroller {
   border: 0;
-  position: relative;
   top: auto;
   right: auto;
   box-shadow: none;
@@ -120,6 +125,57 @@ $ahaNavLinkHover: #69BCFF;
   padding-top: 15px;
 }
 
+
+/// PARKING LOT ///
+
+// remove the striped background on the parking lot
+.parking-lot-board, .parking-lot-scroller {
+  background-image: none;
+}
+
+
+/// PARKING LOT SCROLLING ///
+/// lots of these styles have !important because they must overwrite
+/// inline styles added via javascript
+
+.release-feature-list {
+  min-height: 0px !important;
+}
+ 
+.project-board {
+  width: 100% !important;
+  height: auto !important;
+  padding-top: 15px;
+}
+ 
+.project-board-scroller, .parking-lot-scroller {
+  float: left !important;
+  width: 100% !important;
+  height: auto !important;
+}
+ 
+.parking-lot-handle {
+  display: none;
+}
+ 
+.parking-lot-scroller {
+  border: 0;
+  position: relative;
+  top: auto !important;
+  right: auto !important;
+  box-shadow: none;
+}
+ 
+.parking-lot-board {
+  width: 100% !important;
+  height: auto  !important;
+  padding-top: 15px;
+}
+ 
+// make the background color of the whole container match that of the parking lot
+.project-board-container {
+  background-color: #eee;
+}
 
 // End .eureka_loaded
 }
