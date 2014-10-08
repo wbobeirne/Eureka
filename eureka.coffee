@@ -3,33 +3,80 @@ $ = jQuery
 window.Eureka = {
 
 	init: ->
-		@addNavClasses()
-		@buildMoreNav()
+		# Add these classes first to make things easier to reference
+		@addNavAttrs()
+
+		# Handle adding markup / binding events
+		@buildBetterNav()
 		@handleFeatureBoard()
 		
+		# Mark as loaded
 		$('body').addClass('eureka-loaded')
 
 	# Adds classes to the navigation for styling.
-	addNavClasses: ->
+	addNavAttrs: ->
+		primaryId = null
 		$('.top_nav ul li').each((idx, el) ->
 			$el = $(el)
 			if $el.find('.nav-title').length
 				id = $el.find('.nav-title').html()
 				if id
+					primaryId = id.trim().toLowerCase().replace(' ', '-')
 					$el.addClass('primary')
+					$el.attr('id', 'nav-' + primaryId)
 			else
 				id = $el.find('a').html()
 				if id
+					id = id.trim().toLowerCase().replace(' ', '-')
 					$el.addClass('secondary')
-
-			
-			if id
-				$el.attr('id', 'nav-' + id.trim().toLowerCase().replace(' ', '-'))
+					$el.attr('id', 'nav-' + primaryId + '-' + id)
 		)
 
 	# Moves good navigation to top level items, bad navigation to extras menu
-	buildMoreNav: ->
-		# Organize nav data
+	buildBetterNav: ->
+		# First, create a new nav element so we can hide the old one.
+		navItems = [
+			{
+				text: '<i class="icon-home"></i>'
+				href: '/roadmap'
+			}
+			{
+				text: '<i class="icon-tasks"></i> My work'
+				href: $('#nav-null-my-work a').attr('href')
+			}
+			{
+				text: '<i class="icon-calendar"></i> Releases'
+				href: $('#nav-releases-portfolio a').attr('href')
+			}
+			{
+				text: '<i class="icon-lightbulb"></i> Ideas'
+				href: $('#nav-ideas-list a').attr('href')
+			}
+			{
+				text: '<i class="icon-th"></i> Features board'
+				href: $('#nav-features-board a').attr('href')
+			}
+			{
+				text: '<i class="icon-th-list"></i> Features list'
+				href: $('#nav-features-list a').attr('href')
+			}
+		]
+		$oldNav = $('.top_nav .nav:not(.right-nav)')
+		$newNav = $('<ul id="site-nav" class="nav">')
+
+		for item in navItems
+			$item = $("""
+				<li class="primary">
+					<a href="#{item.href}">#{item.text}</a>
+				</li>
+			""")
+			if window.location.pathname == item.href
+				$item.find('a').addClass('current')
+
+			$newNav.append($item)
+
+
+		# Now, make a new nav that's collapsed that contains everything
 		navItems = []
 		$('.top_nav li .nav-title').each((idx, el) ->
 			$navItem = $(el).closest('li')
@@ -83,7 +130,9 @@ window.Eureka = {
 					</div>
 				""")
 
-		$('ul.nav:not(.right-nav)').append($moreItems)
+		$newNav.append($moreItems)
+		$oldNav.after($newNav)
+		$oldNav.remove()
 		
 		# Bind events
 		$moreItems.find('.toggle').off('click').on('click', ->

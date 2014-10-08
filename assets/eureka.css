@@ -1,9 +1,10 @@
 .eureka-loaded .trial-header,
-.eureka-loaded #nav-notebooks,
-.eureka-loaded #nav-product,
-.eureka-loaded #nav-strategy,
-.eureka-loaded #nav-roadmap .subnav {
+.eureka-loaded .top_nav .brand {
   display: none;
+}
+.eureka-loaded .top_nav .navbar-inner {
+  padding-left: 0;
+  box-shadow: none;
 }
 .eureka-loaded #nav-more-items .nav-items {
   display: none;
@@ -43,7 +44,13 @@
 }
 .eureka-loaded .project-board-container .release .card:hover {
   box-shadow: none;
-  border: 1px solid #0073CF !important;
+  border-top: 1px solid #777 !important;
+  border-right: 1px solid #777 !important;
+  border-bottom: 1px solid #777 !important;
+}
+.eureka-loaded .project-board-container .release .card:hover .name a {
+  color: #08C;
+  text-decoration: none;
 }
 .eureka-loaded .details {
   border: 0;

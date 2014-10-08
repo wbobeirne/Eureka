@@ -12,11 +12,12 @@ $ahaNavLinkHover: #69BCFF;
 /////// TOP NAV ///////
 
 .trial-header,
-#nav-notebooks,
-#nav-product,
-#nav-strategy,
-#nav-roadmap .subnav {
+.top_nav .brand {
   display: none;
+}
+.top_nav .navbar-inner {
+  padding-left: 0;
+  box-shadow: none;
 }
 #nav-more-items {
   .nav-items {
@@ -70,8 +71,14 @@ $ahaNavLinkHover: #69BCFF;
 
 // card hover
 .project-board-container .release .card:hover {
-    box-shadow: none;
-    border: 1px solid #0073CF !important;
+  box-shadow: none;
+  border-top: 1px solid #777 !important;
+  border-right: 1px solid #777 !important;
+  border-bottom: 1px solid #777 !important;
+  .name a {
+    color: #08C;
+    text-decoration: none;
+  }
 }
 
 .details {
