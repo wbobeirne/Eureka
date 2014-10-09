@@ -143,8 +143,56 @@ window.Eureka = {
 	handleFeatureBoard: ->
 		return if !$('.project-board-container').length
 
-		$('.project-board-scroller').off('scroll')
-		$('.parking-lot-scroller').off('scroll')
+		# Initialize local storage
+		storageId = 'expanded-releases'
+		expandedReleases = JSON.parse(localStorage.getItem(storageId))
+		if !expandedReleases
+			expandedReleases = []
+
+		# Add a spot to place expanded releases
+		$('.project-board, .parking-lot-board').prepend('<div class="expanded-feature-container">')
+
+		# Add expand buttons to the releases
+		$('.project-board-container .release').each((idx, el) ->
+			$release = $(el)
+			$release.addClass('collapsed')
+			$release.find('.inner').append("""
+				<a href="javascript:void(0)" class="expand-btn">Expand</a>
+				<a href="javascript:void(0)" class="collapse-btn">
+					<i class="icon-remove"></i>
+				</a>
+			""")
+		)
+		$('.release .expand-btn').on('click', ->
+			$release = $(this).closest('.release')
+			$release.parent()
+				.find('.expanded-feature-container')
+				.addClass('has-releases')
+				.append($release)
+			$release.addClass('expanded').removeClass('collapsed')
+
+			expandedReleases.push($release.data('release-id'))
+			localStorage.setItem(storageId, JSON.stringify(expandedReleases))
+		)
+		$('.release .collapse-btn').on('click', ->
+			$release = $(this).closest('.release')
+			$release.parent().parent().append($release)
+			$release.removeClass('expanded').addClass('collapsed')
+
+			remainingReleases = []
+			releaseId = $release.data('release-id')
+			for id, i in expandedReleases
+				if id != releaseId
+					remainingReleases.push(id)
+			expandedReleases = remainingReleases
+			localStorage.setItem(storageId, JSON.stringify(expandedReleases))
+		)
+
+		# Expand ones we've previously expanded
+		$('.project-board-container .release').each((idx, el) ->
+			if expandedReleases.indexOf($(el).data('release-id')) != -1
+				$(el).find('.expand-btn').click()
+		)
 }
 
 # Run init, or not, based on extension status

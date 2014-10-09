@@ -107,11 +107,51 @@
       });
     },
     handleFeatureBoard: function() {
+      var expandedReleases, storageId;
       if (!$('.project-board-container').length) {
         return;
       }
-      $('.project-board-scroller').off('scroll');
-      return $('.parking-lot-scroller').off('scroll');
+      storageId = 'expanded-releases';
+      expandedReleases = JSON.parse(localStorage.getItem(storageId));
+      if (!expandedReleases) {
+        expandedReleases = [];
+      }
+      $('.project-board, .parking-lot-board').prepend('<div class="expanded-feature-container">');
+      $('.project-board-container .release').each(function(idx, el) {
+        var $release;
+        $release = $(el);
+        $release.addClass('collapsed');
+        return $release.find('.inner').append("<a href=\"javascript:void(0)\" class=\"expand-btn\">Expand</a>\n<a href=\"javascript:void(0)\" class=\"collapse-btn\">\n	<i class=\"icon-remove\"></i>\n</a>");
+      });
+      $('.release .expand-btn').on('click', function() {
+        var $release;
+        $release = $(this).closest('.release');
+        $release.parent().find('.expanded-feature-container').addClass('has-releases').append($release);
+        $release.addClass('expanded').removeClass('collapsed');
+        expandedReleases.push($release.data('release-id'));
+        return localStorage.setItem(storageId, JSON.stringify(expandedReleases));
+      });
+      $('.release .collapse-btn').on('click', function() {
+        var $release, i, id, releaseId, remainingReleases, _i, _len;
+        $release = $(this).closest('.release');
+        $release.parent().parent().append($release);
+        $release.removeClass('expanded').addClass('collapsed');
+        remainingReleases = [];
+        releaseId = $release.data('release-id');
+        for (i = _i = 0, _len = expandedReleases.length; _i < _len; i = ++_i) {
+          id = expandedReleases[i];
+          if (id !== releaseId) {
+            remainingReleases.push(id);
+          }
+        }
+        expandedReleases = remainingReleases;
+        return localStorage.setItem(storageId, JSON.stringify(expandedReleases));
+      });
+      return $('.project-board-container .release').each(function(idx, el) {
+        if (expandedReleases.indexOf($(el).data('release-id')) !== -1) {
+          return $(el).find('.expand-btn').click();
+        }
+      });
     }
   };
 

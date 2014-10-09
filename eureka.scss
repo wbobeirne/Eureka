@@ -1,6 +1,12 @@
-// Only apply styles if eureka is loaded.
-.eureka-loaded {
+// Initially hide the page
+body {
+  opacity: 0;
+  transition: opacity 75ms ease;
+}
 
+// Only apply styles if eureka is loaded.
+body.eureka-loaded {
+opacity: 1;
 
 ////// VARIABLES //////
 
@@ -15,9 +21,18 @@ $ahaNavLinkHover: #69BCFF;
 .top_nav .brand {
   display: none;
 }
-.top_nav .navbar-inner {
-  padding-left: 0;
-  box-shadow: none;
+.top_nav.navbar {
+  .navbar-inner {
+    padding-left: 0;
+    box-shadow: none;
+  }
+
+  li {
+    i {
+      font-size: 14px;
+      padding-right: 2px;
+    }
+  }
 }
 #nav-more-items {
   .nav-items {
@@ -112,32 +127,98 @@ $ahaNavLinkHover: #69BCFF;
   .parking-lot-scroller {
     position: relative;
     float: left;
+    padding-bottom: 20px;
   }
-}
 
-.parking-lot-handle {
-  display: none;
-}
+  .release {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    padding: 10px;
+    border: 1px solid #AAA;
+    border-radius: 5px;
+    margin: 0 0 10px 10px;
 
-.parking-lot-scroller {
-  border: 0;
-  top: auto;
-  right: auto;
-  box-shadow: none;
-}
+    .heading {
+      h4 {
+        margin-bottom: 5px;
+      }
+    }
+    .feature {
+      display: none;
+    }
+    .expand-btn {
+      position: absolute;
+      display: block;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #AAA;
+      font-size: 11px;
+      line-height: 50px;
+    }
+    .collapse-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: none;
+      color: #AAA;
+      font-size: 16px;
+      &:hover {
+        color: #555;
+        text-decoration: none;
+      }
+    }
 
-.parking-lot-board {
-  width: 100%;
-  height: auto;
-  padding-top: 15px;
-}
+    &.expanded {
+      height: auto;
+      width: 250px;
+      padding: 0;
+      margin-right: 10px;
+      border: none;
+      .feature {
+        display: block;
+      }
+      .expand-btn {
+        display: none;
+      }
+      .collapse-btn {
+        display: block;
+      }
+    }
+  }
 
+  .expanded-feature-container {
+    float: left;
+    &.has-releases {
+      padding: 0 20px;
+      margin-right: 20px;
+      border-right: 1px solid #EEE;
+    }
+  }
 
-/// PARKING LOT ///
-
-// remove the striped background on the parking lot
-.parking-lot-board, .parking-lot-scroller {
-  background-image: none;
+  // Parking lot
+  .parking-lot-board, .parking-lot-scroller {
+    background-image: none;
+  }
+  .parking-lot-board {
+    width: 100%;
+    height: auto;
+    padding-top: 15px;
+    .expanded-feature-container {
+      border-color: #DDD;
+    }
+  }
+  .parking-lot-handle {
+    display: none;
+  }
+  .parking-lot-scroller {
+    border: 0;
+    top: auto;
+    right: auto;
+    box-shadow: none;
+  }
 }
 
 
