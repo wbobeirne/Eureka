@@ -92,6 +92,7 @@ body.eureka-loaded .project-board-container .parking-lot-scroller {
   position: relative;
   float: left;
   padding-bottom: 20px;
+  outline: none;
 }
 body.eureka-loaded .project-board-container .release {
   position: relative;
@@ -167,8 +168,6 @@ body.eureka-loaded .project-board-container .expanded-feature-container {
 }
 body.eureka-loaded .project-board-container .expanded-feature-container.has-releases {
   padding: 0 20px;
-  margin-right: 20px;
-  border-right: 1px solid #EEE;
 }
 body.eureka-loaded .project-board-container .parking-lot-board, body.eureka-loaded .project-board-container .parking-lot-scroller {
   background-image: none;

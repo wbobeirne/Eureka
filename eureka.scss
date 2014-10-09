@@ -143,6 +143,7 @@ $parkingLotBG: #ebedf2;
     position: relative;
     float: left;
     padding-bottom: 20px;
+    outline: none;
   }
 
   .release {
@@ -231,8 +232,6 @@ $parkingLotBG: #ebedf2;
     float: left;
     &.has-releases {
       padding: 0 20px;
-      margin-right: 20px;
-      border-right: 1px solid #EEE;
     }
   }
 
