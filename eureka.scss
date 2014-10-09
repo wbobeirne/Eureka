@@ -13,6 +13,7 @@ opacity: 1;
 $ahaText: #474747;
 $ahaNavBorder: #D5D5D5;
 $ahaNavLinkHover: #69BCFF;
+$parkingLotBG: #ebedf2;
 
 
 /////// TOP NAV ///////
@@ -238,6 +239,7 @@ $ahaNavLinkHover: #69BCFF;
   // Parking lot
   .parking-lot-board, .parking-lot-scroller {
     background-image: none;
+		background: $parkingLotBG;
   }
   .parking-lot-board {
     width: 100%;
@@ -295,11 +297,19 @@ $ahaNavLinkHover: #69BCFF;
   width: 100% !important;
   height: auto  !important;
   padding-top: 15px;
+
+	.collapsed {
+		background: darken(#ebedf2, 5%) !important;
+
+		&.expand-hover {
+			background: #d6e1f9 !important;
+		}
+	}
 }
 
 // make the background color of the whole container match that of the parking lot
 .project-board-container {
-  background-color: #eee;
+  background-color: $parkingLotBG;
 }
 
 // End .eureka_loaded

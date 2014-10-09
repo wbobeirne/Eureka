@@ -130,7 +130,8 @@ body.eureka-loaded {
         margin-right: 20px;
         border-right: 1px solid #EEE; }
     body.eureka-loaded .project-board-container .parking-lot-board, body.eureka-loaded .project-board-container .parking-lot-scroller {
-      background-image: none; }
+      background-image: none;
+      background: #ebedf2; }
     body.eureka-loaded .project-board-container .parking-lot-board {
       width: 100%;
       height: auto;
@@ -166,5 +167,9 @@ body.eureka-loaded {
     width: 100% !important;
     height: auto  !important;
     padding-top: 15px; }
+    body.eureka-loaded .parking-lot-board .collapsed {
+      background: #dcdfe8 !important; }
+      body.eureka-loaded .parking-lot-board .collapsed.expand-hover {
+        background: #d6e1f9 !important; }
   body.eureka-loaded .project-board-container {
-    background-color: #eee; }
+    background-color: #ebedf2; }
