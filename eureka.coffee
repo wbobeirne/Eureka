@@ -152,59 +152,89 @@ window.Eureka = {
 		# Add a spot to place expanded releases
 		$('.project-board, .parking-lot-board').prepend('<div class="expanded-feature-container">')
 
-		# Add expand buttons to the releases
-		$('.project-board-container .release').each((idx, el) ->
-			$release = $(el)
+		# Define a private function for rebuilding release markup
+		buildRelease = ($release) ->
 			$release.addClass('collapsed')
+
+			# Add expand buttons to the releases
 			$release.find('.inner').append("""
 				<a href="javascript:void(0)" class="expand-btn">Expand</a>
 				<a href="javascript:void(0)" class="collapse-btn">
 					<i class="icon-remove"></i>
 				</a>
 			""")
-		)
-		$('.release .expand-btn').on('click', ->
-			$release = $(this).closest('.release')
-			$release.parent()
-				.find('.expanded-feature-container')
-				.addClass('has-releases')
-				.append($release)
-			$release.addClass('expanded').removeClass('collapsed')
+			$release.find('.expand-btn').on('click', ->
+				$release.parent()
+					.find('.expanded-feature-container')
+					.addClass('has-releases')
+					.append($release)
+				$release.addClass('expanded').removeClass('collapsed')
 
-			expandedReleases.push($release.data('release-id'))
-			localStorage.setItem(storageId, JSON.stringify(expandedReleases))
-		)
-		$('.release .collapse-btn').on('click', ->
-			$release = $(this).closest('.release')
-			$release.parent().parent().append($release)
-			$release.removeClass('expanded').addClass('collapsed')
+				expandedReleases.push($release.data('release-id'))
+				localStorage.setItem(storageId, JSON.stringify(expandedReleases))
+			)
+			$release.find('.collapse-btn').on('click', ->
+				$release = $(this).closest('.release')
+				$release.parent().parent().append($release)
+				$release.removeClass('expanded').addClass('collapsed')
 
-			remainingReleases = []
-			releaseId = $release.data('release-id')
-			for id, i in expandedReleases
-				if id != releaseId
-					remainingReleases.push(id)
-			expandedReleases = remainingReleases
-			localStorage.setItem(storageId, JSON.stringify(expandedReleases))
-		)
+				remainingReleases = []
+				releaseId = $release.data('release-id')
+				for id, i in expandedReleases
+					if id != releaseId
+						remainingReleases.push(id)
+				expandedReleases = remainingReleases
+				localStorage.setItem(storageId, JSON.stringify(expandedReleases))
+			)
 
-		# hover state for expand button
-		$('.release .expand-btn').on('mouseenter', ->
-			$(@).closest('.release').addClass('expand-hover')
-		).on('mouseleave', ->
-			$(@).closest('.release').removeClass('expand-hover')
-		)
+			# Expand if it's in the list
+			if expandedReleases.indexOf($release.data('release-id')) != -1
+				$release.find('.expand-btn').click()
 
-		# Expand ones we've previously expanded
+			# hover state for expand button
+			$release.find('.expand-btn').on('mouseenter', ->
+				$(@).closest('.release').addClass('expand-hover')
+			).on('mouseleave', ->
+				$(@).closest('.release').removeClass('expand-hover')
+			)
+
+			$release.addClass('initialized')
+
+
+		# Build all the releases initially
 		$('.project-board-container .release').each((idx, el) ->
-			if expandedReleases.indexOf($(el).data('release-id')) != -1
-				$(el).find('.expand-btn').click()
+			buildRelease($(el))
+		)
+		# Listen in on AJAX requests. Rebuild releases as needed.
+		document.body.removeEventListener('extensionAjaxComplete')
+		document.body.addEventListener('extensionAjaxComplete', ->
+			$('.project-board-container .release:not(.initialized)').each((idx, el) =>
+				buildRelease($(el))
+			)
 		)
 }
+
+
+# Injects a script to the page head to allow us to bind custom events that are
+# otherwise inaccessible to Chrome extensions.
+injectScript = ->
+	binder = =>
+		eacEvent = document.createEvent('Event')
+		eacEvent.initEvent('extensionAjaxComplete', true, true)
+
+		jQuery(document).ajaxComplete((event, req, settings) =>
+			document.body.dispatchEvent(eacEvent)
+		)
+
+	injectedScript = document.createElement('script')
+	injectedScript.type = 'text/javascript'
+	injectedScript.text = '(' + binder + ')("");'
+	(document.body || document.head).appendChild(injectedScript)
 
 # Run init, or not, based on extension status
 $(document).ready( =>
 	Eureka.init()
+	injectScript()
 )
 # For turbolinks
 $(document).on('page:load', =>
