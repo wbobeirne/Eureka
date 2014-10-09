@@ -9,7 +9,7 @@ window.Eureka = {
 		# Handle adding markup / binding events
 		@buildBetterNav()
 		@handleFeatureBoard()
-		
+
 		# Mark as loaded
 		$('body').addClass('eureka-loaded')
 
@@ -133,7 +133,7 @@ window.Eureka = {
 		$newNav.append($moreItems)
 		$oldNav.after($newNav)
 		$oldNav.remove()
-		
+
 		# Bind events
 		$moreItems.find('.toggle').off('click').on('click', ->
 			$moreItems.toggleClass('expanded')
@@ -186,6 +186,13 @@ window.Eureka = {
 					remainingReleases.push(id)
 			expandedReleases = remainingReleases
 			localStorage.setItem(storageId, JSON.stringify(expandedReleases))
+		)
+
+		# hover state for expand button
+		$('.release .expand-btn').on('mouseenter', ->
+			$(@).closest('.release').addClass('expand-hover')
+		).on('mouseleave', ->
+			$(@).closest('.release').removeClass('expand-hover')
 		)
 
 		# Expand ones we've previously expanded

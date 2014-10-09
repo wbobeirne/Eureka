@@ -22,6 +22,8 @@ $ahaNavLinkHover: #69BCFF;
   display: none;
 }
 .top_nav.navbar {
+	margin-bottom: 10px;
+
   .navbar-inner {
     padding-left: 0;
     box-shadow: none;
@@ -34,6 +36,7 @@ $ahaNavLinkHover: #69BCFF;
     }
   }
 }
+
 #nav-more-items {
   .nav-items {
     display: none;
@@ -80,16 +83,14 @@ $ahaNavLinkHover: #69BCFF;
       display: none;
     }
   }
-  
+
   border: 1px solid #ddd;
 }
 
 // card hover
 .project-board-container .release .card:hover {
-  box-shadow: none;
-  border-top: 1px solid #777 !important;
-  border-right: 1px solid #777 !important;
-  border-bottom: 1px solid #777 !important;
+  box-shadow: 0 0 1px #999;
+
   .name a {
     color: #08C;
     text-decoration: none;
@@ -98,19 +99,19 @@ $ahaNavLinkHover: #69BCFF;
 
 .details {
   border: 0;
-  
+
   // remove ref-id
   .caption {
     display: none;
   }
-  
+
   // goals and initiatives are for disruptive innovators bringing game-changing technology to the table.
   // and no more aha! score.
   .attribute-pairs {
     li:nth-child(3) {
       display: none;
     }
-    
+
     .full-line {
       &:nth-child(2), &:nth-child(3) {
         display: none;
@@ -119,10 +120,23 @@ $ahaNavLinkHover: #69BCFF;
   }
 }
 
+// user text
+.user-content * {
+	font-size: 15px;
+	line-height: 18px;
+}
+
+.user-content p,
+.user-content pre {
+	margin-bottom: 12px;
+}
+
 
 /// FEATURES BOARD ///
 
 .project-board-container {
+	top: 85px;
+
   .project-board-scroller,
   .parking-lot-scroller {
     position: relative;
@@ -133,9 +147,8 @@ $ahaNavLinkHover: #69BCFF;
   .release {
     position: relative;
     width: 180px;
-    height: 180px;
+    height: 60px;
     padding: 10px;
-    border: 1px solid #AAA;
     border-radius: 5px;
     margin: 0 0 10px 10px;
 
@@ -149,14 +162,13 @@ $ahaNavLinkHover: #69BCFF;
     }
     .expand-btn {
       position: absolute;
+			overflow: hidden;
       display: block;
+			top: 0;
+			right: 0;
       bottom: 0;
       left: 0;
-      width: 100%;
-      text-align: center;
-      color: #AAA;
-      font-size: 11px;
-      line-height: 50px;
+			line-height: 5000px;
     }
     .collapse-btn {
       position: absolute;
@@ -177,16 +189,41 @@ $ahaNavLinkHover: #69BCFF;
       padding: 0;
       margin-right: 10px;
       border: none;
+
+			.heading h4 {
+				display: inline-block;
+				max-width: 203px;
+			}
+
       .feature {
         display: block;
       }
+
       .expand-btn {
         display: none;
       }
+
       .collapse-btn {
         display: block;
       }
     }
+
+		&.collapsed {
+			background: #ebedf2;
+
+			&.expand-hover {
+				background: #d6e1f9;
+			}
+
+			.heading h4 {
+				color: #949aa6;
+			}
+
+			.add-feature,
+			.heading .date {
+				display: none;
+			}
+		}
   }
 
   .expanded-feature-container {
@@ -229,23 +266,23 @@ $ahaNavLinkHover: #69BCFF;
 .release-feature-list {
   min-height: 0px !important;
 }
- 
+
 .project-board {
   width: 100% !important;
   height: auto !important;
   padding-top: 15px;
 }
- 
+
 .project-board-scroller, .parking-lot-scroller {
   float: left !important;
   width: 100% !important;
   height: auto !important;
 }
- 
+
 .parking-lot-handle {
   display: none;
 }
- 
+
 .parking-lot-scroller {
   border: 0;
   position: relative;
@@ -253,13 +290,13 @@ $ahaNavLinkHover: #69BCFF;
   right: auto !important;
   box-shadow: none;
 }
- 
+
 .parking-lot-board {
   width: 100% !important;
   height: auto  !important;
   padding-top: 15px;
 }
- 
+
 // make the background color of the whole container match that of the parking lot
 .project-board-container {
   background-color: #eee;
