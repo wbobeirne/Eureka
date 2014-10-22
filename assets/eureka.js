@@ -9,6 +9,7 @@
       this.addNavAttrs();
       this.buildBetterNav();
       this.handleFeatureBoard();
+      this.handleFeatureDrawer();
       return $('body').addClass('eureka-loaded');
     },
     addNavAttrs: function() {
@@ -161,6 +162,28 @@
         return $('.project-board-container .release:not(.initialized)').each(function(idx, el) {
           return buildRelease($(el));
         });
+      });
+    },
+    handleFeatureDrawer: function() {
+      var $drawer;
+      $drawer = $('#workspace .drawer');
+      if (!$drawer.length) {
+        return;
+      }
+      return $drawer.on('click', '.comment .user-content', function() {
+        var watchers,
+          _this = this;
+        if ($(this).find('.watcher-names').length) {
+          return;
+        }
+        watchers = [];
+        $drawer.find('.watchers img').each(function(idx, el) {
+          return watchers.push($(el).attr('title'));
+        });
+        if (!watchers.length) {
+          return;
+        }
+        return $(this).parent().append("<div class=\"watcher-names\">\n	Your comment will be emailed to: " + (watchers.join(', ')) + "\n</div>");
       });
     }
   };

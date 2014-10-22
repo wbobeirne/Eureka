@@ -16,6 +16,16 @@ $ahaNavLinkHover: #69BCFF;
 $parkingLotBG: #ebedf2;
 
 
+/////// MIXINS ////////
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 /////// TOP NAV ///////
 
 .trial-header,
@@ -101,11 +111,6 @@ $parkingLotBG: #ebedf2;
 .details {
   border: 0;
 
-  // remove ref-id
-  .caption {
-    display: none;
-  }
-
   // goals and initiatives are for disruptive innovators bringing game-changing technology to the table.
   // and no more aha! score.
   .attribute-pairs {
@@ -117,6 +122,51 @@ $parkingLotBG: #ebedf2;
       &:nth-child(2), &:nth-child(3) {
         display: none;
       }
+    }
+  }
+
+  // Hide requirements, not used by us
+  .requirements {
+    display: none;
+  }
+
+  // Adjust tasks display
+  .tasks {
+    margin-bottom: 20px;
+    .mid-line:after {
+      display: none;
+    }
+  }
+
+  // Comments all the time, dammit
+  .comments {
+    .mid-line:after,
+    .add-btn {
+      display: none;
+    }
+    ul.list {
+      margin-left: 0;
+    }
+    .comment-new {
+      display: block;
+      .body {
+        @include clearfix;
+      }
+      .user-content {
+        min-height: 50px;
+      }
+    }
+
+    // Watcher names by the comment
+    .btn,
+    .watcher-names {
+      float: left;
+    }
+    .watcher-names {
+      margin-left: 8px;
+      font-size: 12px;
+      line-height: 26px;
+      color: #AAA;
     }
   }
 }

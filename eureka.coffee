@@ -9,6 +9,7 @@ window.Eureka = {
 		# Handle adding markup / binding events
 		@buildBetterNav()
 		@handleFeatureBoard()
+		@handleFeatureDrawer()
 
 		# Mark as loaded
 		$('body').addClass('eureka-loaded')
@@ -211,6 +212,31 @@ window.Eureka = {
 			$('.project-board-container .release:not(.initialized)').each((idx, el) =>
 				buildRelease($(el))
 			)
+		)
+
+
+	# Make adjustments to the drawer
+	handleFeatureDrawer: ->
+		$drawer = $('#workspace .drawer')
+		return if !$drawer.length
+
+		# Show who gets sent a comment
+		$drawer.on('click', '.comment .user-content', ->
+			return if $(this).find('.watcher-names').length
+
+			# Build a list of watcher names
+			watchers = []
+			$drawer.find('.watchers img').each((idx, el) =>
+				watchers.push($(el).attr('title'))
+			)
+
+			# Insert them beside the submit button
+			return if !watchers.length
+			$(this).parent().append("""
+				<div class="watcher-names">
+					Your comment will be emailed to: #{watchers.join(', ')}
+				</div>
+			""")
 		)
 }
 

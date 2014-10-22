@@ -67,14 +67,48 @@ body.eureka-loaded .project-board-container .release .card:hover .name a {
 body.eureka-loaded .details {
   border: 0;
 }
-body.eureka-loaded .details .caption {
-  display: none;
-}
 body.eureka-loaded .details .attribute-pairs li:nth-child(3) {
   display: none;
 }
 body.eureka-loaded .details .attribute-pairs .full-line:nth-child(2), body.eureka-loaded .details .attribute-pairs .full-line:nth-child(3) {
   display: none;
+}
+body.eureka-loaded .details .requirements {
+  display: none;
+}
+body.eureka-loaded .details .tasks {
+  margin-bottom: 20px;
+}
+body.eureka-loaded .details .tasks .mid-line:after {
+  display: none;
+}
+body.eureka-loaded .details .comments .mid-line:after,
+body.eureka-loaded .details .comments .add-btn {
+  display: none;
+}
+body.eureka-loaded .details .comments ul.list {
+  margin-left: 0;
+}
+body.eureka-loaded .details .comments .comment-new {
+  display: block;
+}
+body.eureka-loaded .details .comments .comment-new .body:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+body.eureka-loaded .details .comments .comment-new .user-content {
+  min-height: 50px;
+}
+body.eureka-loaded .details .comments .btn,
+body.eureka-loaded .details .comments .watcher-names {
+  float: left;
+}
+body.eureka-loaded .details .comments .watcher-names {
+  margin-left: 8px;
+  font-size: 12px;
+  line-height: 26px;
+  color: #AAA;
 }
 body.eureka-loaded .user-content * {
   font-size: 15px;
