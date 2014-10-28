@@ -42,6 +42,9 @@ window.Eureka = {
 				href: '/roadmap'
 			}
 			{
+				html: $('.top_nav .nav:not(.right-nav) .dropdown')
+			}
+			{
 				text: '<i class="icon-tasks"></i> My work'
 				href: $('#nav-null-my-work a').attr('href')
 			}
@@ -66,11 +69,14 @@ window.Eureka = {
 		$newNav = $('<ul id="site-nav" class="nav">')
 
 		for item in navItems
-			$item = $("""
-				<li class="primary">
-					<a href="#{item.href}">#{item.text}</a>
-				</li>
-			""")
+			if item.html
+				$item = item.html
+			else
+				$item = $("""
+					<li class="primary">
+						<a href="#{item.href}">#{item.text}</a>
+					</li>
+				""")
 			if window.location.pathname == item.href
 				$item.find('a').addClass('current')
 
@@ -222,7 +228,7 @@ window.Eureka = {
 
 		# Show who gets sent a comment
 		$drawer.on('click', '.comment .user-content', ->
-			return if $(this).find('.watcher-names').length
+			return if $drawer.find('.watcher-names').length
 
 			# Build a list of watcher names
 			watchers = []

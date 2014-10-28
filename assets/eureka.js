@@ -42,6 +42,8 @@
           text: '<i class="icon-home"></i>',
           href: '/roadmap'
         }, {
+          html: $('.top_nav .nav:not(.right-nav) .dropdown')
+        }, {
           text: '<i class="icon-tasks"></i> My work',
           href: $('#nav-null-my-work a').attr('href')
         }, {
@@ -62,7 +64,11 @@
       $newNav = $('<ul id="site-nav" class="nav">');
       for (_i = 0, _len = navItems.length; _i < _len; _i++) {
         item = navItems[_i];
-        $item = $("<li class=\"primary\">\n	<a href=\"" + item.href + "\">" + item.text + "</a>\n</li>");
+        if (item.html) {
+          $item = item.html;
+        } else {
+          $item = $("<li class=\"primary\">\n	<a href=\"" + item.href + "\">" + item.text + "</a>\n</li>");
+        }
         if (window.location.pathname === item.href) {
           $item.find('a').addClass('current');
         }
@@ -173,7 +179,7 @@
       return $drawer.on('click', '.comment .user-content', function() {
         var watchers,
           _this = this;
-        if ($(this).find('.watcher-names').length) {
+        if ($drawer.find('.watcher-names').length) {
           return;
         }
         watchers = [];
