@@ -1,6 +1,5 @@
 (function() {
-  var $, injectScript,
-    _this = this;
+  var $, injectScript;
 
   $ = jQuery;
 
@@ -8,8 +7,8 @@
     init: function() {
       this.addNavAttrs();
       this.buildBetterNav();
+      this.addSearchButton();
       this.handleFeatureBoard();
-      this.handleFeatureDrawer();
       return $('body').addClass('eureka-loaded');
     },
     addNavAttrs: function() {
@@ -95,7 +94,7 @@
           subnavs: secondaryItems
         });
       });
-      $moreItems = $("<li id=\"nav-more-items\">\n	<a href=\"javascript:void(0)\" class=\"toggle\">\n		<span class=\"nav-title\">More items</span>\n	</a>\n	<div class=\"nav-items\">\n\n	</div>\n</li>");
+      $moreItems = $("<li id=\"nav-more-items\">\n	<a href=\"javascript:void(0)\" class=\"toggle\">\n		More items\n	</a>\n	<div class=\"nav-items\">\n\n	</div>\n</li>");
       $navItems = $moreItems.find('.nav-items');
       for (_j = 0, _len1 = navItems.length; _j < _len1; _j++) {
         primary = navItems[_j];
@@ -113,111 +112,134 @@
         return $moreItems.toggleClass('expanded');
       });
     },
+    addSearchButton: function() {
+      $('.nav.right-nav li').first().after("<li class=\"secondary\" id=\"search-toggle\">\n	<a href=\"javascript:void(0)\">\n		<i class=\"icon-search\"></i>\n	</a>\n</li>");
+      return $('#search-toggle').on('click', function() {
+        var $nav;
+        $nav = $('.navbar-search');
+        $nav.toggleClass('show');
+        if ($nav.hasClass('show')) {
+          return $nav.find('input').focus();
+        }
+      });
+    },
     handleFeatureBoard: function() {
-      var buildRelease, expandedReleases, storageId;
+      var $popover, fixTags, hideReleases, releasesToHide, storageId;
       if (!$('.project-board-container').length) {
         return;
       }
-      storageId = 'expanded-releases';
-      expandedReleases = JSON.parse(localStorage.getItem(storageId));
-      if (!expandedReleases) {
-        expandedReleases = [];
+      storageId = 'hidden-releases';
+      releasesToHide = JSON.parse(localStorage.getItem(storageId));
+      if (!releasesToHide) {
+        releasesToHide = [];
       }
-      $('.project-board, .parking-lot-board').prepend('<div class="expanded-feature-container">');
-      buildRelease = function($release) {
-        $release.addClass('collapsed');
-        $release.find('.inner').append("<a href=\"javascript:void(0)\" class=\"expand-btn\">Expand</a>\n<a href=\"javascript:void(0)\" class=\"collapse-btn\">\n	<i class=\"icon-remove\"></i>\n</a>");
-        $release.find('.expand-btn').on('click', function() {
-          $release.parent().find('.expanded-feature-container').addClass('has-releases').append($release);
-          $release.addClass('expanded').removeClass('collapsed');
-          expandedReleases.push($release.data('release-id'));
-          return localStorage.setItem(storageId, JSON.stringify(expandedReleases));
-        });
-        $release.find('.collapse-btn').on('click', function() {
-          var i, id, releaseId, remainingReleases, _i, _len;
-          $release = $(this).closest('.release');
-          $release.parent().parent().append($release);
-          $release.removeClass('expanded').addClass('collapsed');
-          remainingReleases = [];
-          releaseId = $release.data('release-id');
-          for (i = _i = 0, _len = expandedReleases.length; _i < _len; i = ++_i) {
-            id = expandedReleases[i];
-            if (id !== releaseId) {
-              remainingReleases.push(id);
-            }
-          }
-          expandedReleases = remainingReleases;
-          return localStorage.setItem(storageId, JSON.stringify(expandedReleases));
-        });
-        if (expandedReleases.indexOf($release.data('release-id')) !== -1) {
-          $release.find('.expand-btn').click();
+      $('.project-board-controls .filter-control').after("<span class=\"hide-control\">\n	<span class=\"result\">\n		Hiding <span id=\"release-hide-count\">0</span> Releases\n	</span>\n	<a id=\"hide-control-btn\" href=\"javascript:;\" class=\"btn btn-mini btn-primary\">\n		<i class=\"icon-eye-open\"></i>\n	</a>\n</span>");
+      $popover = $("<div id=\"hide-popover\" class=\"popover feature-hide-popover bottom\">\n	<div class=\"arrow tooltip-arrow\"></div>\n	<div class=\"popover-inner\">\n		<div class=\"popover-content\">\n			<h4>Show the following releases</h4>\n			<div class=\"releases\"></div>\n			<a id=\"save-hide-control\" class=\"btn btn-primary\">Save</a>\n			<a id=\"reset-hide-control\" class=\"btn btn-default\">Reset</a>\n		</div>\n	</div>\n</div>");
+      $('.project-board-scroller .release').each(function(idx, el) {
+        var $release, releaseId, releaseTitle;
+        $release = $(el);
+        releaseId = $release.data('release-id');
+        releaseTitle = $release.find('.heading a').first().html();
+        $popover.find('.releases').append("<div class=\"release\">\n	<input\n		id=\"hide-release-" + releaseId + "\"\n		data-release-id=\"" + releaseId + "\"\n		type=\"checkbox\"\n		name=\"hide-releases\"\n		checked=\"checked\">\n	</input>\n	<label for=\"hide-release-" + releaseId + "\">" + releaseTitle + "</label>\n</div>");
+        if ($.inArray(releaseId, releasesToHide) !== -1) {
+          return $popover.find("#hide-release-" + releaseId).attr('checked', false);
         }
-        $release.find('.expand-btn').on('mouseenter', function() {
-          return $(this).closest('.release').addClass('expand-hover');
-        }).on('mouseleave', function() {
-          return $(this).closest('.release').removeClass('expand-hover');
-        });
-        return $release.addClass('initialized');
-      };
-      $('.project-board-container .release').each(function(idx, el) {
-        return buildRelease($(el));
       });
+      $('body').append($popover);
+      $('#hide-control-btn').on('click', function() {
+        var offset;
+        offset = $(this).offset();
+        $popover.toggle();
+        return $popover.css({
+          top: offset.top + 30,
+          left: offset.left + $(this).width()
+        });
+      });
+      $('#save-hide-control').on('click', function() {
+        releasesToHide = [];
+        $('#hide-popover input:not(:checked)').each(function(idx, el) {
+          return releasesToHide.push($(el).data('release-id'));
+        });
+        localStorage.setItem(storageId, JSON.stringify(releasesToHide));
+        hideReleases();
+        return $('#hide-control-btn').trigger('click');
+      });
+      $('#reset-hide-control').on('click', function() {
+        $popover.find('input').each(function() {
+          console.log(this);
+          return this.checked = true;
+        });
+        return $('#save-hide-control').trigger('click');
+      });
+      fixTags = function() {
+        return $('.project-board-container .rendered-multi-select li').each((function(_this) {
+          return function(idx, el) {
+            if ($(el).html() === '&nbsp;') {
+              return $(el).remove();
+            }
+          };
+        })(this));
+      };
+      hideReleases = function() {
+        var newWidth;
+        releasesToHide = JSON.parse(localStorage.getItem(storageId));
+        if (!releasesToHide) {
+          return;
+        }
+        newWidth = 0;
+        return $('.project-board-scroller .release').each(function(idx, el) {
+          var $release, releaseId;
+          $release = $(el);
+          releaseId = $release.data('release-id');
+          if ($.inArray(releaseId, releasesToHide) !== -1) {
+            $release.hide();
+          } else {
+            $release.show();
+            newWidth += $release.outerWidth(true);
+          }
+          $('.project-board-scroller .project-board').width(newWidth + 20);
+          return $('#release-hide-count').html(releasesToHide.length);
+        });
+      };
+      fixTags();
+      hideReleases();
       document.body.removeEventListener('extensionAjaxComplete');
       return document.body.addEventListener('extensionAjaxComplete', function() {
-        var _this = this;
-        return $('.project-board-container .release:not(.initialized)').each(function(idx, el) {
-          return buildRelease($(el));
-        });
-      });
-    },
-    handleFeatureDrawer: function() {
-      var $drawer;
-      $drawer = $('#workspace .drawer');
-      if (!$drawer.length) {
-        return;
-      }
-      return $drawer.on('click', '.comment .user-content', function() {
-        var watchers,
-          _this = this;
-        if ($drawer.find('.watcher-names').length) {
-          return;
-        }
-        watchers = [];
-        $drawer.find('.watchers img').each(function(idx, el) {
-          return watchers.push($(el).attr('title'));
-        });
-        if (!watchers.length) {
-          return;
-        }
-        return $(this).parent().append("<div class=\"watcher-names\">\n	Your comment will be emailed to: " + (watchers.join(', ')) + "\n</div>");
+        hideReleases();
+        return fixTags();
       });
     }
   };
 
   injectScript = function() {
-    var binder, injectedScript,
-      _this = this;
-    binder = function() {
-      var eacEvent;
-      eacEvent = document.createEvent('Event');
-      eacEvent.initEvent('extensionAjaxComplete', true, true);
-      return jQuery(document).ajaxComplete(function(event, req, settings) {
-        return document.body.dispatchEvent(eacEvent);
-      });
-    };
+    var binder, injectedScript;
+    binder = (function(_this) {
+      return function() {
+        var eacEvent;
+        eacEvent = document.createEvent('Event');
+        eacEvent.initEvent('extensionAjaxComplete', true, true);
+        return jQuery(document).ajaxComplete(function(event, req, settings) {
+          return document.body.dispatchEvent(eacEvent);
+        });
+      };
+    })(this);
     injectedScript = document.createElement('script');
     injectedScript.type = 'text/javascript';
     injectedScript.text = '(' + binder + ')("");';
     return (document.body || document.head).appendChild(injectedScript);
   };
 
-  $(document).ready(function() {
-    Eureka.init();
-    return injectScript();
-  });
+  $(document).ready((function(_this) {
+    return function() {
+      Eureka.init();
+      return injectScript();
+    };
+  })(this));
 
-  $(document).on('page:load', function() {
-    return Eureka.init();
-  });
+  $(document).on('page:load', (function(_this) {
+    return function() {
+      return Eureka.init();
+    };
+  })(this));
 
 }).call(this);

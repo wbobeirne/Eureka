@@ -28,6 +28,7 @@ $parkingLotBG: #ebedf2;
 
 /////// TOP NAV ///////
 
+// Basic nav styles
 .trial-header,
 .top_nav .brand {
   display: none;
@@ -46,8 +47,29 @@ $parkingLotBG: #ebedf2;
       padding-right: 2px;
     }
   }
+
+  .subnav-bar {
+    display: none;
+  }
+  // Search
+  .navbar-search {
+    display: none;
+    background: #FFF;
+    width: 236px;
+
+    &.show {
+      display: block;
+    }
+
+    input {
+      position: relative;
+      width: 100%;
+      box-sizing: content-box;
+    }
+  }
 }
 
+// Custom more items menu
 #nav-more-items {
   .nav-items {
     display: none;
@@ -88,14 +110,15 @@ $parkingLotBG: #ebedf2;
 //////// CARDS ////////
 
 .card {
+  border: 1px solid #ddd;
+
   .info {
+    padding-top: 5px;
     // hide ref-ids, dates, and aha score
     &:first-child, .pull-right .item:first-child {
       display: none;
     }
   }
-
-  border: 1px solid #ddd;
 }
 
 // card hover
@@ -107,6 +130,8 @@ $parkingLotBG: #ebedf2;
     text-decoration: none;
   }
 }
+
+//// FEATURE DETAILS ////
 
 .details {
   border: 0;
@@ -123,11 +148,6 @@ $parkingLotBG: #ebedf2;
         display: none;
       }
     }
-  }
-
-  // Hide requirements, not used by us
-  .requirements {
-    display: none;
   }
 
   // Adjust tasks display
@@ -183,183 +203,48 @@ $parkingLotBG: #ebedf2;
 }
 
 
-/// FEATURES BOARD ///
-
-.project-board-container {
-	top: 85px;
-
-  .project-board-scroller,
-  .parking-lot-scroller {
-    position: relative;
-    float: left;
-    padding-bottom: 20px;
-    outline: none;
+//// FEATURE BOARD /////
+.project-board-controls {
+  .size-column {
+    width: 320px;
   }
-
+  .hide-control {
+    padding-left: 5px;
+    font-size: 8pt;
+    .result {
+      color: #aaa;
+    }
+    .icon {
+      font-size: 14px;
+    }
+  }
+}
+#hide-popover {
+  width: 250px;
+  transform: translateX(-50%);
+  .releases {
+    margin-bottom: 10px;
+  }
   .release {
-    position: relative;
-    width: 180px;
-    height: 60px;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 0 0 10px 10px;
-
-    .heading {
-      h4 {
-        margin-bottom: 5px;
-      }
+    label,
+    input {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 30px;
+      font-size: 13px;
+      color: #555;
+      margin: 0;
     }
-    .feature {
-      display: none;
-    }
-    .expand-btn {
-      position: absolute;
-			overflow: hidden;
-      display: block;
-			top: 0;
-			right: 0;
-      bottom: 0;
-      left: 0;
-			line-height: 5000px;
-    }
-    .collapse-btn {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      display: none;
-      color: #AAA;
-      font-size: 16px;
-      &:hover {
-        color: #555;
-        text-decoration: none;
-      }
-    }
-
-    &.expanded {
-      height: auto;
-      width: 250px;
-      padding: 0;
-      margin-right: 10px;
-      border: none;
-
-			.heading h4 {
-				display: inline-block;
-				max-width: 203px;
-			}
-
-      .feature {
-        display: block;
-      }
-
-      .expand-btn {
-        display: none;
-      }
-
-      .collapse-btn {
-        display: block;
-      }
-    }
-
-		&.collapsed {
-			background: #ebedf2;
-
-			&.expand-hover {
-				background: #d6e1f9;
-			}
-
-			.heading h4 {
-				color: #949aa6;
-			}
-
-			.add-feature,
-			.heading .date {
-				display: none;
-			}
-		}
-  }
-
-  .expanded-feature-container {
-    float: left;
-    &.has-releases {
-      padding: 0 20px;
+    input {
+      margin-right: 4px;
     }
   }
-
-  // Parking lot
-  .parking-lot-board, .parking-lot-scroller {
-    background-image: none;
-		background: $parkingLotBG;
-  }
-  .parking-lot-board {
-    width: 100%;
-    height: auto;
-    padding-top: 15px;
-    .expanded-feature-container {
-      border-color: #DDD;
-    }
-  }
-  .parking-lot-handle {
-    display: none;
-  }
-  .parking-lot-scroller {
-    border: 0;
-    top: auto;
-    right: auto;
-    box-shadow: none;
-  }
 }
 
-
-/// PARKING LOT SCROLLING ///
-/// lots of these styles have !important because they must overwrite
-/// inline styles added via javascript
-
-.release-feature-list {
-  min-height: 0px !important;
-}
-
-.project-board {
-  width: 100% !important;
-  height: auto !important;
-  padding-top: 15px;
-}
-
-.project-board-scroller, .parking-lot-scroller {
-  float: left !important;
-  width: 100% !important;
-  height: auto !important;
-}
-
-.parking-lot-handle {
-  display: none;
-}
-
-.parking-lot-scroller {
-  border: 0;
-  position: relative;
-  top: auto !important;
-  right: auto !important;
-  box-shadow: none;
-}
-
-.parking-lot-board {
-  width: 100% !important;
-  height: auto  !important;
-  padding-top: 15px;
-
-	.collapsed {
-		background: darken(#ebedf2, 5%) !important;
-
-		&.expand-hover {
-			background: #d6e1f9 !important;
-		}
-	}
-}
-
-// make the background color of the whole container match that of the parking lot
 .project-board-container {
-  background-color: $parkingLotBG;
+  top: 86px;
 }
+
 
 // End .eureka_loaded
 }

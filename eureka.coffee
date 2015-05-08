@@ -8,8 +8,8 @@ window.Eureka = {
 
 		# Handle adding markup / binding events
 		@buildBetterNav()
+		@addSearchButton()
 		@handleFeatureBoard()
-		@handleFeatureDrawer()
 
 		# Mark as loaded
 		$('body').addClass('eureka-loaded')
@@ -110,7 +110,7 @@ window.Eureka = {
 		$moreItems = $("""
 			<li id="nav-more-items">
 				<a href="javascript:void(0)" class="toggle">
-					<span class="nav-title">More items</span>
+					More items
 				</a>
 				<div class="nav-items">
 
@@ -146,103 +146,138 @@ window.Eureka = {
 			$moreItems.toggleClass('expanded')
 		)
 
+	addSearchButton: ->
+		$('.nav.right-nav li').first().after("""
+			<li class="secondary" id="search-toggle">
+				<a href="javascript:void(0)">
+					<i class="icon-search"></i>
+				</a>
+			</li>
+		""")
+
+		$('#search-toggle').on('click', ->
+			$nav = $('.navbar-search')
+			$nav.toggleClass('show')
+			if $nav.hasClass('show')
+				$nav.find('input').focus()
+		)
+
 	# Handles the display at products/*/feature_cards
 	handleFeatureBoard: ->
 		return if !$('.project-board-container').length
+		storageId = 'hidden-releases'
+		releasesToHide = JSON.parse(localStorage.getItem(storageId))
+		if !releasesToHide
+			releasesToHide = []
 
-		# Initialize local storage
-		storageId = 'expanded-releases'
-		expandedReleases = JSON.parse(localStorage.getItem(storageId))
-		if !expandedReleases
-			expandedReleases = []
-
-		# Add a spot to place expanded releases
-		$('.project-board, .parking-lot-board').prepend('<div class="expanded-feature-container">')
-
-		# Define a private function for rebuilding release markup
-		buildRelease = ($release) ->
-			$release.addClass('collapsed')
-
-			# Add expand buttons to the releases
-			$release.find('.inner').append("""
-				<a href="javascript:void(0)" class="expand-btn">Expand</a>
-				<a href="javascript:void(0)" class="collapse-btn">
-					<i class="icon-remove"></i>
+		# Set up hidden releases UI
+		$('.project-board-controls .filter-control').after("""
+			<span class="hide-control">
+				<span class="result">
+					Hiding <span id="release-hide-count">0</span> Releases
+				</span>
+				<a id="hide-control-btn" href="javascript:;" class="btn btn-mini btn-primary">
+					<i class="icon-eye-open"></i>
 				</a>
-			""")
-			$release.find('.expand-btn').on('click', ->
-				$release.parent()
-					.find('.expanded-feature-container')
-					.addClass('has-releases')
-					.append($release)
-				$release.addClass('expanded').removeClass('collapsed')
-
-				expandedReleases.push($release.data('release-id'))
-				localStorage.setItem(storageId, JSON.stringify(expandedReleases))
-			)
-			$release.find('.collapse-btn').on('click', ->
-				$release = $(this).closest('.release')
-				$release.parent().parent().append($release)
-				$release.removeClass('expanded').addClass('collapsed')
-
-				remainingReleases = []
-				releaseId = $release.data('release-id')
-				for id, i in expandedReleases
-					if id != releaseId
-						remainingReleases.push(id)
-				expandedReleases = remainingReleases
-				localStorage.setItem(storageId, JSON.stringify(expandedReleases))
-			)
-
-			# Expand if it's in the list
-			if expandedReleases.indexOf($release.data('release-id')) != -1
-				$release.find('.expand-btn').click()
-
-			# hover state for expand button
-			$release.find('.expand-btn').on('mouseenter', ->
-				$(@).closest('.release').addClass('expand-hover')
-			).on('mouseleave', ->
-				$(@).closest('.release').removeClass('expand-hover')
-			)
-
-			$release.addClass('initialized')
-
-
-		# Build all the releases initially
-		$('.project-board-container .release').each((idx, el) ->
-			buildRelease($(el))
-		)
-		# Listen in on AJAX requests. Rebuild releases as needed.
-		document.body.removeEventListener('extensionAjaxComplete')
-		document.body.addEventListener('extensionAjaxComplete', ->
-			$('.project-board-container .release:not(.initialized)').each((idx, el) =>
-				buildRelease($(el))
-			)
-		)
-
-
-	# Make adjustments to the drawer
-	handleFeatureDrawer: ->
-		$drawer = $('#workspace .drawer')
-		return if !$drawer.length
-
-		# Show who gets sent a comment
-		$drawer.on('click', '.comment .user-content', ->
-			return if $drawer.find('.watcher-names').length
-
-			# Build a list of watcher names
-			watchers = []
-			$drawer.find('.watchers img').each((idx, el) =>
-				watchers.push($(el).attr('title'))
-			)
-
-			# Insert them beside the submit button
-			return if !watchers.length
-			$(this).parent().append("""
-				<div class="watcher-names">
-					Your comment will be emailed to: #{watchers.join(', ')}
+			</span>
+		""")
+		$popover = $("""
+			<div id="hide-popover" class="popover feature-hide-popover bottom">
+				<div class="arrow tooltip-arrow"></div>
+				<div class="popover-inner">
+					<div class="popover-content">
+						<h4>Show the following releases</h4>
+						<div class="releases"></div>
+						<a id="save-hide-control" class="btn btn-primary">Save</a>
+						<a id="reset-hide-control" class="btn btn-default">Reset</a>
+					</div>
+				</div>
+			</div>
+		""")
+		$('.project-board-scroller .release').each((idx, el) ->
+			$release = $(el)
+			releaseId = $release.data('release-id')
+			releaseTitle = $release.find('.heading a').first().html()
+			# Add to popover list
+			$popover.find('.releases').append("""
+				<div class="release">
+					<input
+						id="hide-release-#{releaseId}"
+						data-release-id="#{releaseId}"
+						type="checkbox"
+						name="hide-releases"
+						checked="checked">
+					</input>
+					<label for="hide-release-#{releaseId}">#{releaseTitle}</label>
 				</div>
 			""")
+			# Uncheck the ones we're hiding
+			if $.inArray(releaseId, releasesToHide) != -1
+				$popover.find("#hide-release-#{releaseId}").attr('checked', false)
+		)
+
+		# Add popover to dom, bind events.
+		$('body').append($popover)
+		$('#hide-control-btn').on('click', ->
+			offset = $(this).offset()
+			$popover.toggle()
+			$popover.css({
+				top: offset.top + 30
+				left: offset.left + $(this).width()
+			})
+		)
+		$('#save-hide-control').on('click', ->
+			# Get a list of the releases to hide
+			releasesToHide = []
+			$('#hide-popover input:not(:checked)').each((idx, el) ->
+				releasesToHide.push($(el).data('release-id'))
+			)
+			localStorage.setItem(storageId, JSON.stringify(releasesToHide))
+			hideReleases()
+			$('#hide-control-btn').trigger('click')
+		)
+		$('#reset-hide-control').on('click', ->
+			$popover.find('input').each(->
+				console.log(this)
+				this.checked = true
+			)
+			$('#save-hide-control').trigger('click')
+		)
+
+		# Remove fake placeholder tags
+		fixTags = ->
+			$('.project-board-container .rendered-multi-select li').each((idx, el) =>
+				if $(el).html() == '&nbsp;'
+					$(el).remove()
+			)
+
+		# Hide the releases that should be hidden
+		hideReleases = ->
+			releasesToHide = JSON.parse(localStorage.getItem(storageId))
+			if !releasesToHide
+				return
+
+			newWidth = 0
+			$('.project-board-scroller .release').each((idx, el) ->
+				$release = $(el)
+				releaseId = $release.data('release-id')
+				# Hide if it's meant to be hidden
+				if $.inArray(releaseId, releasesToHide) != -1
+					$release.hide()
+				else
+					$release.show()
+					newWidth += $release.outerWidth(true)
+				$('.project-board-scroller .project-board').width(newWidth + 20)
+				$('#release-hide-count').html(releasesToHide.length)
+			)
+
+		# Run the functions we defined. On AJAX requests, rerun them.
+		fixTags()
+		hideReleases()
+		document.body.removeEventListener('extensionAjaxComplete')
+		document.body.addEventListener('extensionAjaxComplete', ->
+			hideReleases()
+			fixTags()
 		)
 }
 

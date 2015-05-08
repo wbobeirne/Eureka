@@ -21,6 +21,22 @@ body.eureka-loaded .top_nav.navbar li i {
   font-size: 14px;
   padding-right: 2px;
 }
+body.eureka-loaded .top_nav.navbar .subnav-bar {
+  display: none;
+}
+body.eureka-loaded .top_nav.navbar .navbar-search {
+  display: none;
+  background: #FFF;
+  width: 236px;
+}
+body.eureka-loaded .top_nav.navbar .navbar-search.show {
+  display: block;
+}
+body.eureka-loaded .top_nav.navbar .navbar-search input {
+  position: relative;
+  width: 100%;
+  box-sizing: content-box;
+}
 body.eureka-loaded #nav-more-items .nav-items {
   display: none;
   position: absolute;
@@ -54,6 +70,9 @@ body.eureka-loaded #nav-more-items.expanded .nav-items {
 body.eureka-loaded .card {
   border: 1px solid #ddd;
 }
+body.eureka-loaded .card .info {
+  padding-top: 5px;
+}
 body.eureka-loaded .card .info:first-child, body.eureka-loaded .card .info .pull-right .item:first-child {
   display: none;
 }
@@ -71,9 +90,6 @@ body.eureka-loaded .details .attribute-pairs li:nth-child(3) {
   display: none;
 }
 body.eureka-loaded .details .attribute-pairs .full-line:nth-child(2), body.eureka-loaded .details .attribute-pairs .full-line:nth-child(3) {
-  display: none;
-}
-body.eureka-loaded .details .requirements {
   display: none;
 }
 body.eureka-loaded .details .tasks {
@@ -118,146 +134,38 @@ body.eureka-loaded .user-content p,
 body.eureka-loaded .user-content pre {
   margin-bottom: 12px;
 }
-body.eureka-loaded .project-board-container {
-  top: 85px;
+body.eureka-loaded .project-board-controls .size-column {
+  width: 320px;
 }
-body.eureka-loaded .project-board-container .project-board-scroller,
-body.eureka-loaded .project-board-container .parking-lot-scroller {
-  position: relative;
-  float: left;
-  padding-bottom: 20px;
-  outline: none;
+body.eureka-loaded .project-board-controls .hide-control {
+  padding-left: 5px;
+  font-size: 8pt;
 }
-body.eureka-loaded .project-board-container .release {
-  position: relative;
-  width: 180px;
-  height: 60px;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 0 0 10px 10px;
+body.eureka-loaded .project-board-controls .hide-control .result {
+  color: #aaa;
 }
-body.eureka-loaded .project-board-container .release .heading h4 {
-  margin-bottom: 5px;
+body.eureka-loaded .project-board-controls .hide-control .icon {
+  font-size: 14px;
 }
-body.eureka-loaded .project-board-container .release .feature {
-  display: none;
-}
-body.eureka-loaded .project-board-container .release .expand-btn {
-  position: absolute;
-  overflow: hidden;
-  display: block;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  line-height: 5000px;
-}
-body.eureka-loaded .project-board-container .release .collapse-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  display: none;
-  color: #AAA;
-  font-size: 16px;
-}
-body.eureka-loaded .project-board-container .release .collapse-btn:hover {
-  color: #555;
-  text-decoration: none;
-}
-body.eureka-loaded .project-board-container .release.expanded {
-  height: auto;
+body.eureka-loaded #hide-popover {
   width: 250px;
-  padding: 0;
-  margin-right: 10px;
-  border: none;
+  transform: translateX(-50%);
 }
-body.eureka-loaded .project-board-container .release.expanded .heading h4 {
+body.eureka-loaded #hide-popover .releases {
+  margin-bottom: 10px;
+}
+body.eureka-loaded #hide-popover .release label,
+body.eureka-loaded #hide-popover .release input {
   display: inline-block;
-  max-width: 203px;
+  vertical-align: middle;
+  line-height: 30px;
+  font-size: 13px;
+  color: #555;
+  margin: 0;
 }
-body.eureka-loaded .project-board-container .release.expanded .feature {
-  display: block;
-}
-body.eureka-loaded .project-board-container .release.expanded .expand-btn {
-  display: none;
-}
-body.eureka-loaded .project-board-container .release.expanded .collapse-btn {
-  display: block;
-}
-body.eureka-loaded .project-board-container .release.collapsed {
-  background: #ebedf2;
-}
-body.eureka-loaded .project-board-container .release.collapsed.expand-hover {
-  background: #d6e1f9;
-}
-body.eureka-loaded .project-board-container .release.collapsed .heading h4 {
-  color: #949aa6;
-}
-body.eureka-loaded .project-board-container .release.collapsed .add-feature,
-body.eureka-loaded .project-board-container .release.collapsed .heading .date {
-  display: none;
-}
-body.eureka-loaded .project-board-container .expanded-feature-container {
-  float: left;
-}
-body.eureka-loaded .project-board-container .expanded-feature-container.has-releases {
-  padding: 0 20px;
-}
-body.eureka-loaded .project-board-container .parking-lot-board, body.eureka-loaded .project-board-container .parking-lot-scroller {
-  background-image: none;
-  background: #ebedf2;
-}
-body.eureka-loaded .project-board-container .parking-lot-board {
-  width: 100%;
-  height: auto;
-  padding-top: 15px;
-}
-body.eureka-loaded .project-board-container .parking-lot-board .expanded-feature-container {
-  border-color: #DDD;
-}
-body.eureka-loaded .project-board-container .parking-lot-handle {
-  display: none;
-}
-body.eureka-loaded .project-board-container .parking-lot-scroller {
-  border: 0;
-  top: auto;
-  right: auto;
-  box-shadow: none;
-}
-body.eureka-loaded .release-feature-list {
-  min-height: 0px !important;
-}
-body.eureka-loaded .project-board {
-  width: 100% !important;
-  height: auto !important;
-  padding-top: 15px;
-}
-body.eureka-loaded .project-board-scroller, body.eureka-loaded .parking-lot-scroller {
-  float: left !important;
-  width: 100% !important;
-  height: auto !important;
-}
-body.eureka-loaded .parking-lot-handle {
-  display: none;
-}
-body.eureka-loaded .parking-lot-scroller {
-  border: 0;
-  position: relative;
-  top: auto !important;
-  right: auto !important;
-  box-shadow: none;
-}
-body.eureka-loaded .parking-lot-board {
-  width: 100% !important;
-  height: auto  !important;
-  padding-top: 15px;
-}
-body.eureka-loaded .parking-lot-board .collapsed {
-  background: #dcdfe8 !important;
-}
-body.eureka-loaded .parking-lot-board .collapsed.expand-hover {
-  background: #d6e1f9 !important;
+body.eureka-loaded #hide-popover .release input {
+  margin-right: 4px;
 }
 body.eureka-loaded .project-board-container {
-  background-color: #ebedf2;
+  top: 86px;
 }
